@@ -1,0 +1,15 @@
+:root {
+    --col-bg-explosive: rgba(167, 12, 25, 1);
+    --col-bg-piercing: rgba(178, 109, 31, 1);
+    --col-bg-mystic: rgba(33, 111, 156, 1);
+    --col-bg-sonic: rgba(148, 49, 165, 1);
+    --col-bg-buff: rgba(255, 79, 50, 0.122);
+    --col-bg-debuff: rgba(63, 158, 238, 0.122);
+}
+
+.glass {
+    background: var(--col-theme-glass);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 15px;
+}
