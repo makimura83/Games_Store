@@ -1,27 +1,85 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Games Store</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>Home - Games Store</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>Games Store</h1>
+        <h1>Welcome Back to Games Store</h1>
         <nav>
-            <a href="้home.html">หน้าหลัก</a>
-            <a href="store.html">คลังเกม</a>
-            <a href="profile.html">โปรไฟล์</a>
-            <a href="login.html">เข้าสู่ระบบ</a>
+            <a href="store.html">Store</a>
+            <a href="profile.html">Profile</a>
+            <a href="#" onclick="logout()">Logout</a>
         </nav>
     </header>
     <main>
-        <section id="featured">
-            <h2>เกมแนะนำ</h2>
-            <div id="game-list"></div>
+        <section>
+            <h2>Your Recommended Games</h2>
+            <div id="recommended-games" class="game-container"></div>
         </section>
     </main>
-    <script src="assets/js/main.js"></script>
+    <select id="language-switcher" onchange="changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="th">ไทย</option>
+        <option value="jp">日本語</option>
+    </select>
+    <script src="../js/main.js"></script>
+    <script src="../js/game.js"></script>
+    <script src="../js/language.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'pages/login.html';
+            }
+            fetchRecommendedGames();
+        });
+
+        async function fetchRecommendedGames() {
+            try {
+                const response = await fetch('http://localhost:5000/api/games/recommended', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const games = await response.json();
+                const gameList = document.getElementById('recommended-games');
+                gameList.innerHTML = '';
+
+                games.forEach((game, index) => {
+                    const card = document.createElement('div');
+                    card.classList.add('game-card');
+                    card.innerHTML = `
+                        <img src="${game.image || 'https://via.placeholder.com/300x200'}" alt="${game.title}">
+                        <div class="game-info">
+                            <h3>${game.title}</h3>
+                            <p>${game.description || 'No description'}</p>
+                            <p class="price">$${game.price}</p>
+                            <button onclick="addToCart(${game.id})">Add to Cart</button>
+                        </div>
+                    `;
+                    gameList.appendChild(card);
+
+                    anime({
+                        targets: card,
+                        translateY: [50, 0],
+                        opacity: [0, 1],
+                        delay: index * 100,
+                        duration: 800,
+                        easing: 'easeOutExpo'
+                    });
+                });
+            } catch (error) {
+                console.error('Error fetching recommended games:', error);
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = 'pages/login.html';
+        }
+    </script>
 </body>
 </html>

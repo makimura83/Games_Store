@@ -1,25 +1,49 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>โปรไฟล์ - Games Store</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>Profile - Games Store</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>โปรไฟล์ผู้ใช้</h1>
+        <h1>Profile</h1>
         <nav>
-            <a href="store.html">คลังเกม</a>
-            <a href="cart.html">ตะกร้า</a>
-            <button onclick="logout()">ออกจากระบบ</button>
+            <a href="home.html">Home</a>
+            <a href="store.html">Store</a>
+            <a href="#" onclick="logout()">Logout</a>
         </nav>
     </header>
-    <main>
-        <div id="profile-info"></div>
-        <h2>เกมที่ซื้อแล้ว</h2>
-        <div id="purchased-games"></div>
+    <main class="profile-container" id="profile-bg">
+        <div class="profile-header">
+            <img id="avatar" src="https://via.placeholder.com/100" alt="User Avatar" class="avatar">
+            <h2 data-lang="welcome">Welcome, <span id="username"></span></h2>
+            <button onclick="document.getElementById('avatar-upload').click()" data-lang="change-avatar">Change Avatar</button>
+            <input type="file" id="avatar-upload" accept="image/*" onchange="changeAvatar()" style="display: none;">
+        </div>
+        <div class="cover-image" id="cover-image">
+            <input type="file" id="cover-upload" accept="image/*" onchange="changeCover()">
+        </div>
+        <p data-lang="wallet">Wallet: $<span id="wallet-balance">0.00</span></p>
+        <div class="topup-section">
+            <input type="number" id="topup-amount" placeholder="Enter amount" min="1">
+            <button onclick="topUp()" data-lang="topup-btn">Top Up</button>
+        </div>
+        <button onclick="document.getElementById('bg-upload').click()" data-lang="change-bg">Change Background</button>
+        <input type="file" id="bg-upload" accept="image/*" onchange="changeBackground()" style="display: none;">
+        <h3 data-lang="my-games">My Games</h3>
+        <div id="my-games" class="game-grid"></div>
     </main>
-    <script src="assets/js/profile.js"></script>
+    <select id="language-switcher" onchange="changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="th">ไทย</option>
+        <option value="jp">日本語</option>
+    </select>
+    <script src="../js/profile.js"></script>
+    <script src="../js/language.js"></script>
+    <script src="../js/cart.js"></script>
 </body>
 </html>

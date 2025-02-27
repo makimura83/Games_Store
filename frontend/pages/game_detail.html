@@ -1,24 +1,39 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>รายละเอียดเกม - Games Store</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>Game Detail - Games Store</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>รายละเอียดเกม</h1>
+        <h1>Game Detail</h1>
         <nav>
-            <a href="home.html">หน้าหลัก</a>
-            <a href="store.html">คลังเกม</a>
-            <a href="profile.html">โปรไฟล์</a>
-            <a href="cart.html">ตะกร้า</a>
+            <a href="index.html">Home</a>
+            <a href="store.html">Store</a>
+            <a href="profile.html">Profile</a>
         </nav>
     </header>
     <main>
-        <div id="game-detail"></div>
+        <section class="game-detail">
+            <img id="game-image" src="https://via.placeholder.com/400x300" alt="Game Image">
+            <div class="game-info">
+                <h2 id="game-title"></h2>
+                <p id="game-description"></p>
+                <p class="price" id="game-price"></p>
+                <button onclick="purchaseGame()">Buy Now</button>
+                <button id="download-btn" onclick="downloadGame()" style="display: none;">Download</button>
+            </div>
+        </section>
     </main>
-    <script src="assets/js/game.js"></script>
+    <select id="language-switcher" onchange="changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="th">ไทย</option>
+        <option value="jp">日本語</option>
+    </select>
+    <script src="../js/game_detail.js"></script>
+    <script src="../js/language.js"></script>
 </body>
 </html>

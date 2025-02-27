@@ -1,15 +1,240 @@
-:root {
-    --col-bg-explosive: rgba(167, 12, 25, 1);
-    --col-bg-piercing: rgba(178, 109, 31, 1);
-    --col-bg-mystic: rgba(33, 111, 156, 1);
-    --col-bg-sonic: rgba(148, 49, 165, 1);
-    --col-bg-buff: rgba(255, 79, 50, 0.122);
-    --col-bg-debuff: rgba(63, 158, 238, 0.122);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-.glass {
-    background: var(--col-theme-glass);
-    backdrop-filter: blur(10px);
+body {
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+header {
+    background: linear-gradient(135deg, #0f0c29, #302b63);
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #fff;
+}
+
+nav a {
+    color: #00d4ff;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #fff;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('../assets/background-login.jpg') no-repeat center/cover;
+}
+
+.login-card {
+    background: rgba(22, 33, 62, 0.9);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+    backdrop-filter: blur(5px);
+}
+
+.login-card h2 {
+    color: #00d4ff;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 25px;
+    background: #0f0c29;
+    color: #fff;
+    font-size: 1em;
+}
+
+.login-card button {
+    width: 100%;
+    margin-top: 20px;
+    background: #00d4ff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.login-card button:hover {
+    background: #00b3cc;
+}
+
+.login-card p a {
+    color: #00d4ff;
+    text-decoration: none;
+}
+
+.login-card p a:hover {
+    text-decoration: underline;
+}
+
+.profile-container {
+    min-height: calc(100vh - 80px);
+    padding: 20px;
+    background: #1a1a2e;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #16213e;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #00d4ff;
+}
+
+.profile-header h2 {
+    color: #fff;
+    font-size: 1.5em;
+}
+
+.profile-header button {
+    background: #00d4ff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.profile-header button:hover {
+    background: #00b3cc;
+}
+
+.cover-image {
+    height: 200px;
+    background: url('../assets/default-cover.jpg') no-repeat center/cover;
+    border-radius: 15px 15px 0 0;
+    margin-bottom: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+.cover-image:hover::after {
+    content: "Change Cover";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.topup-section {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.topup-section input {
+    padding: 10px;
+    border: none;
     border-radius: 10px;
+    background: #0f0c29;
+    color: #fff;
+    width: 150px;
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.game-card {
+    background: #16213e;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-10px);
+}
+
+.game-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.game-info {
     padding: 15px;
+}
+
+.game-info select {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 10px;
+    background: #0f0c29;
+    color: #fff;
+    cursor: pointer;
+}
+
+.game-info select:focus {
+    outline: none;
+    background: #1a1a2e;
+}
+
+#language-switcher {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 8px;
+    border-radius: 10px;
+    background: #16213e;
+    color: #fff;
+}
+body[lang="th"] {
+    font-family: 'Noto Sans Thai', sans-serif;
+}
+body[lang="jp"] {
+    font-family: 'Noto Sans JP', sans-serif;
+}
+body[lang="en"] {
+    font-family: 'Poppins', sans-serif;
 }

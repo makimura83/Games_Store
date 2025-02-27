@@ -1,20 +1,35 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ชำระเงิน - Games Store</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>Checkout - Games Store</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>ชำระเงิน</h1>
+        <h1>Checkout</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="store.html">Store</a>
+            <a href="profile.html">Profile</a>
+        </nav>
     </header>
     <main>
-        <h2>รายการของคุณ</h2>
-        <div id="cart-items"></div>
-        <button onclick="checkout()">ชำระเงิน</button>
+        <section class="checkout-container">
+            <h2>Shopping Cart</h2>
+            <div id="cart-items"></div>
+            <p>Total: $<span id="cart-total">0.00</span></p>
+            <button onclick="confirmPurchase()">Confirm Purchase</button>
+        </section>
     </main>
-    <script src="assets/js/cart.js"></script>
+    <select id="language-switcher" onchange="changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="th">ไทย</option>
+        <option value="jp">日本語</option>
+    </select>
+    <script src="../js/cart.js"></script>
+    <script src="../js/language.js"></script>
 </body>
 </html>
