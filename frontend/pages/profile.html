@@ -5,39 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Games Store</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Profile</h1>
+    <header class="header">
+        <h1 data-lang="profile">Profile</h1>
         <nav>
-            <a href="home.html">Home</a>
-            <a href="store.html">Store</a>
-            <a href="#" onclick="logout()">Logout</a>
+            <a href="home.html" data-lang="home">Home</a>
+            <a href="store.html" data-lang="store">Store</a>
+            <a href="#" onclick="logout()" data-lang="logout">Logout</a>
         </nav>
     </header>
     <main class="profile-container" id="profile-bg">
         <div class="profile-header">
-            <img id="avatar" src="https://via.placeholder.com/100" alt="User Avatar" class="avatar">
+            <div class="avatar-section">
+                <img id="avatar" src="https://via.placeholder.com/120" alt="User Avatar" class="avatar">
+                <button onclick="document.getElementById('avatar-upload').click()" data-lang="change-avatar" class="btn-primary">Change Avatar</button>
+                <input type="file" id="avatar-upload" accept="image/*" onchange="changeAvatar()" style="display: none;">
+            </div>
             <h2 data-lang="welcome">Welcome, <span id="username"></span></h2>
-            <button onclick="document.getElementById('avatar-upload').click()" data-lang="change-avatar">Change Avatar</button>
-            <input type="file" id="avatar-upload" accept="image/*" onchange="changeAvatar()" style="display: none;">
         </div>
         <div class="cover-image" id="cover-image">
             <input type="file" id="cover-upload" accept="image/*" onchange="changeCover()">
         </div>
-        <p data-lang="wallet">Wallet: $<span id="wallet-balance">0.00</span></p>
-        <div class="topup-section">
-            <input type="number" id="topup-amount" placeholder="Enter amount" min="1">
-            <button onclick="topUp()" data-lang="topup-btn">Top Up</button>
+        <div class="profile-details">
+            <p data-lang="wallet">Wallet: $<span id="wallet-balance">0.00</span></p>
+            <div class="topup-section">
+                <input type="number" id="topup-amount" placeholder="Enter amount" min="1" class="input-field">
+                <button onclick="topUp()" data-lang="topup-btn" class="btn-primary">Top Up</button>
+            </div>
+            <button onclick="document.getElementById('bg-upload').click()" data-lang="change-bg" class="btn-primary">Change Background</button>
+            <input type="file" id="bg-upload" accept="image/*" onchange="changeBackground()" style="display: none;">
         </div>
-        <button onclick="document.getElementById('bg-upload').click()" data-lang="change-bg">Change Background</button>
-        <input type="file" id="bg-upload" accept="image/*" onchange="changeBackground()" style="display: none;">
         <h3 data-lang="my-games">My Games</h3>
         <div id="my-games" class="game-grid"></div>
     </main>
-    <select id="language-switcher" onchange="changeLanguage(this.value)">
+    <select id="language-switcher" onchange="changeLanguage(this.value)" class="language-switcher">
         <option value="en">English</option>
         <option value="th">ไทย</option>
         <option value="jp">日本語</option>

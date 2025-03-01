@@ -167,3 +167,180 @@ function logout() {
 }
 
 document.addEventListener('DOMContentLoaded', fetchProfile);
+async function fetchProfile() {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch('http://localhost:5000/api/users/me', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const user = await response.json();
+        
+        document.getElementById('username').textContent = user.username;
+        document.getElementById('wallet-balance').textContent = user.wallet.toFixed(2);
+        document.getElementById('avatar').src = user.avatar || 'https://via.placeholder.com/120';
+        fetchGames(user.id);
+
+        // อนิเมชันโหลดหน้า Profile
+        anime({
+            targets: '.profile-header',
+            opacity: [0, 1],
+            translateY: [50, 0],
+            duration: 800,
+            easing: 'easeOutQuad'
+        });
+    } catch (error) {
+        console.error('Error fetching profile:', error);
+    }
+}
+
+async function topUp() {
+    const amount = parseFloat(document.getElementById('topup-amount').value);
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch('http://localhost:5000/api/wallet/topup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ userId: 1, amount })
+        });
+        const result = await response.json();
+        if (response.ok) {
+            alert(result.message);
+            fetchProfile();
+            anime({
+                targets: '#wallet-balance',
+                scale: [1, 1.2, 1],
+                duration: 500,
+                easing: 'easeOutQuad',
+                complete: () => document.querySelector('#wallet-balance').classList.add('success-animation')
+            });
+            setTimeout(() => document.querySelector('#wallet-balance').classList.remove('success-animation'), 1000);
+        } else {
+            showErrorAnimation(result.error);
+        }
+    } catch (error) {
+        console.error('Top-up error:', error);
+        showErrorAnimation('Top-up failed');
+    }
+}
+
+async function downloadGame(gameId, versionId) {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(`http://localhost:5000/api/games/download/${gameId}/${versionId}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `game_${gameId}_v${versionId}.zip`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            anime({
+                targets: '.game-card button',
+                scale: [1, 1.1, 1],
+                duration: 300,
+                easing: 'easeOutQuad'
+            });
+        } else {
+            const result = await response.json();
+            if (result.error.includes('Insufficient funds')) {
+                showInsufficientFundsAnimation();
+            } else {
+                showErrorAnimation(result.error);
+            }
+        }
+    } catch (error) {
+        console.error('Download error:', error);
+        showErrorAnimation('Download failed');
+    }
+}
+
+// ฟังก์ชันใหม่สำหรับอนิเมชัน
+function showPageTransition() {
+    anime({
+        targets: 'body',
+        opacity: [0, 1],
+        translateY: [50, 0],
+        duration: 1000,
+        easing: 'easeOutQuad'
+    });
+}
+
+function showSuccessAnimation(message) {
+    const alert = document.createElement('div');
+    alert.className = 'alert success-animation';
+    alert.textContent = message;
+    document.body.appendChild(alert);
+    anime({
+        targets: alert,
+        scale: [0, 1],
+        opacity: [0, 1],
+        duration: 800,
+        easing: 'easeOutElastic',
+        complete: () => setTimeout(() => {
+            anime({
+                targets: alert,
+                opacity: [1, 0],
+                duration: 500,
+                easing: 'easeInQuad',
+                complete: () => alert.remove()
+            });
+        }, 2000)
+    });
+}
+
+function showErrorAnimation(message) {
+    const alert = document.createElement('div');
+    alert.className = 'alert error-animation';
+    alert.textContent = message;
+    document.body.appendChild(alert);
+    anime({
+        targets: alert,
+        translateX: [-10, 10, 0],
+        opacity: [0, 1, 0],
+        duration: 1000,
+        easing: 'easeInOutQuad',
+        complete: () => setTimeout(() => alert.remove(), 2000)
+    });
+}
+
+function showInsufficientFundsAnimation() {
+    const alert = document.createElement('div');
+    alert.className = 'alert insufficient-funds-animation';
+    alert.textContent = "Insufficient funds! Please top up your wallet.";
+    document.body.appendChild(alert);
+    anime({
+        targets: alert,
+        translateX: [-10, 10, 0],
+        opacity: [0, 1, 0],
+        duration: 1000,
+        easing: 'easeInOutQuad',
+        complete: () => setTimeout(() => alert.remove(), 2000)
+    });
+}
+
+// เรียกใช้อนิเมชันเมื่อโหลดหน้า
+document.addEventListener('DOMContentLoaded', () => {
+    showPageTransition();
+    fetchProfile();
+});
+
+// เพิ่มใน logout
+function logout() {
+    anime({
+        targets: 'body',
+        opacity: [1, 0],
+        duration: 500,
+        easing: 'easeInQuad',
+        complete: () => {
+            localStorage.removeItem('token');
+            window.location.href = 'pages/login.html';
+        }
+    });
+}
