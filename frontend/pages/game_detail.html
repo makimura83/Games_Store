@@ -3,37 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Detail - Games Store</title>
+    <title data-lang="game-detail">Game Detail - Games Store</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Game Detail</h1>
+    <header class="header">
+        <h1 data-lang="game-detail">Game Detail</h1>
         <nav>
-            <a href="index.html">Home</a>
-            <a href="store.html">Store</a>
-            <a href="profile.html">Profile</a>
+            <a href="home.html" data-lang="home">Home</a>
+            <a href="store.html" data-lang="store">Store</a>
+            <a href="profile.html" data-lang="profile">Profile</a>
         </nav>
     </header>
-    <main>
-        <section class="game-detail">
+    <main class="game-detail-container">
+        <section class="game-card">
             <img id="game-image" src="https://via.placeholder.com/400x300" alt="Game Image">
             <div class="game-info">
                 <h2 id="game-title"></h2>
                 <p id="game-description"></p>
                 <p class="price" id="game-price"></p>
-                <button onclick="purchaseGame()">Buy Now</button>
-                <button id="download-btn" onclick="downloadGame()" style="display: none;">Download</button>
+                <button onclick="purchaseGame()" data-lang="buy-now" class="btn-primary">Buy Now</button>
+                <button id="download-btn" onclick="downloadGame()" style="display: none;" data-lang="download" class="btn-primary">Download</button>
             </div>
         </section>
     </main>
-    <select id="language-switcher" onchange="changeLanguage(this.value)">
+    <select id="language-switcher" onchange="changeLanguage(this.value)" class="language-switcher">
         <option value="en">English</option>
         <option value="th">ไทย</option>
         <option value="jp">日本語</option>
     </select>
     <script src="../js/game_detail.js"></script>
     <script src="../js/language.js"></script>
+    <script src="../js/cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            anime({
+                targets: 'body',
+                opacity: [0, 1],
+                translateY: [50, 0],
+                duration: 1000,
+                easing: 'easeOutQuad'
+            });
+        });
+    </script>
 </body>
 </html>

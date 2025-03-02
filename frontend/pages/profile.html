@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - Games Store</title>
+    <title data-lang="profile">Profile - Games Store</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
@@ -18,28 +18,44 @@
         </nav>
     </header>
     <main class="profile-container" id="profile-bg">
-        <div class="profile-header">
-            <div class="avatar-section">
-                <img id="avatar" src="https://via.placeholder.com/120" alt="User Avatar" class="avatar">
-                <button onclick="document.getElementById('avatar-upload').click()" data-lang="change-avatar" class="btn-primary">Change Avatar</button>
-                <input type="file" id="avatar-upload" accept="image/*" onchange="changeAvatar()" style="display: none;">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="avatar-section">
+                    <img id="avatar" src="https://via.placeholder.com/120" alt="User Avatar" class="avatar">
+                    <div class="upload-buttons">
+                        <button onclick="document.getElementById('avatar-upload').click()" data-lang="change-avatar" class="btn-primary">Change Avatar</button>
+                        <input type="file" id="avatar-upload" accept="image/*" onchange="changeAvatar()" class="file-input" style="display: none;">
+                    </div>
+                </div>
+                <h2 data-lang="welcome">Welcome, <span id="username"></span></h2>
+                <button onclick="editProfile()" data-lang="edit-profile" class="btn-secondary">Edit Profile</button>
             </div>
-            <h2 data-lang="welcome">Welcome, <span id="username"></span></h2>
-        </div>
-        <div class="cover-image" id="cover-image">
-            <input type="file" id="cover-upload" accept="image/*" onchange="changeCover()">
-        </div>
-        <div class="profile-details">
-            <p data-lang="wallet">Wallet: $<span id="wallet-balance">0.00</span></p>
-            <div class="topup-section">
-                <input type="number" id="topup-amount" placeholder="Enter amount" min="1" class="input-field">
-                <button onclick="topUp()" data-lang="topup-btn" class="btn-primary">Top Up</button>
+            <div class="cover-image" id="cover-image" data-label="Change Cover">
+                <input type="file" id="cover-upload" accept="image/*" onchange="changeCover()" class="file-input" style="display: none;">
             </div>
-            <button onclick="document.getElementById('bg-upload').click()" data-lang="change-bg" class="btn-primary">Change Background</button>
-            <input type="file" id="bg-upload" accept="image/*" onchange="changeBackground()" style="display: none;">
+            <div class="profile-details">
+                <div class="detail-item">
+                    <span data-lang="wallet">Wallet:</span> $<span id="wallet-balance">0.00</span>
+                </div>
+                <div class="detail-item">
+                    <span data-lang="joined">Joined:</span> <span id="joined-date"></span>
+                </div>
+                <div class="detail-item">
+                    <span data-lang="purchased-games">Purchased Games:</span> <span id="purchased-games">0</span>
+                </div>
+                <div class="topup-section">
+                    <input type="number" id="topup-amount" placeholder="Enter amount" min="1" class="input-field">
+                    <button onclick="topUp()" data-lang="topup-btn" class="btn-primary">Top Up</button>
+                </div>
+                <button onclick="document.getElementById('bg-upload').click()" data-lang="change-bg" class="btn-primary">Change Background</button>
+                <input type="file" id="bg-upload" accept="image/*" onchange="changeBackground()" class="file-input" style="display: none;">
+            </div>
+            <h3 data-lang="my-games">My Games</h3>
+            <div id="my-games" class="game-grid"></div>
+            <div id="developer-actions" style="display: none; margin-top: 20px;">
+                <button onclick="navigateTo('manage_games.html')" data-lang="manage-games" class="btn-primary">Manage Games</button>
+            </div>
         </div>
-        <h3 data-lang="my-games">My Games</h3>
-        <div id="my-games" class="game-grid"></div>
     </main>
     <select id="language-switcher" onchange="changeLanguage(this.value)" class="language-switcher">
         <option value="en">English</option>
@@ -49,5 +65,16 @@
     <script src="../js/profile.js"></script>
     <script src="../js/language.js"></script>
     <script src="../js/cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            anime({
+                targets: 'body',
+                opacity: [0, 1],
+                translateY: [50, 0],
+                duration: 1000,
+                easing: 'easeOutQuad'
+            });
+        });
+    </script>
 </body>
 </html>
